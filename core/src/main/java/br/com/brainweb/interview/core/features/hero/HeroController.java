@@ -3,6 +3,7 @@ package br.com.brainweb.interview.core.features.hero;
 import br.com.brainweb.interview.model.DTO.HeroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -10,8 +11,10 @@ import javax.transaction.Transactional;
 import java.net.URI;
 import java.util.UUID;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-@RequestMapping("/api/v1/heroes")
+@RequestMapping(value = "/api/v1/heroes", produces = APPLICATION_JSON_VALUE)
 public class HeroController {
 
     @Autowired
@@ -22,9 +25,10 @@ public class HeroController {
      * @param heroDTO
      * @return ResponseEntity
      */
-    @PostMapping
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
     @Transactional
-    public ResponseEntity create(@RequestBody HeroDTO heroDTO) {
+    public ResponseEntity create(@Validated
+                                 @RequestBody HeroDTO heroDTO) {
         try {
             HeroDTO heroDTOResponse = this.heroService.create(heroDTO);
             return heroDTOResponse != null ? ResponseEntity.created(getURI(heroDTOResponse.getId())).build() : ResponseEntity.badRequest().build();
@@ -77,7 +81,9 @@ public class HeroController {
      */
     @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity update(@PathVariable("id") UUID id, @RequestBody HeroDTO heroDTO){
+    public ResponseEntity update(@PathVariable("id") UUID id,
+                                 @Validated
+                                 @RequestBody HeroDTO heroDTO){
         try{
             HeroDTO heroDTOResponse = this.heroService.update(id, heroDTO);
             return heroDTOResponse != null ?

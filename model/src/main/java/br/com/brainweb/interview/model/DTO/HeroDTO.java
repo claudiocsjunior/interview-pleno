@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -27,31 +24,32 @@ import static lombok.AccessLevel.PRIVATE;
 public class HeroDTO {
     private UUID id;
 
-    @NotBlank(message = "message.name.mandatory")
-    @Length(min = 1, max = 255, message = "message.name.length")
+    @NotBlank(message = "Name cannot be empty")
+    @NotEmpty(message = "Name cannot be empty")
+    @Length(min = 1, max = 255, message = "Name min 1 and max 255")
     private String name;
 
-    @NotNull(message = "message.race.mandatory")
+    @NotNull(message = "Race cannot be null")
     private Race race;
 
-    @Min(value = 0, message = "message.powerstats.strength.min")
-    @Max(value = 10, message = "message.powerstats.strength.max")
-    @NotNull(message = "message.powerstats.strength.mandatory")
+    @Min(value = 0, message = "strength min 0")
+    @Max(value = 10, message = "strength max 10")
+    @NotNull(message = "strength cannot be null")
     private int strength;
 
-    @Min(value = 0, message = "message.powerstats.agility.min")
-    @Max(value = 10, message = "message.powerstats.agility.max")
-    @NotNull(message = "message.powerstats.agility.mandatory")
+    @Min(value = 0, message = "agility min 0")
+    @Max(value = 10, message = "agility max 10")
+    @NotNull(message = "agility cannot be null")
     private int agility;
 
-    @Min(value = 0, message = "message.powerstats.dexterity.min")
-    @Max(value = 10, message = "message.powerstats.dexterity.max")
-    @NotNull(message = "message.powerstats.dexterity.mandatory")
+    @Min(value = 0, message = "dexterity min 0")
+    @Max(value = 10, message = "dexterity max 10")
+    @NotNull(message = "dexterity cannot be null")
     private int dexterity;
 
-    @Min(value = 0, message = "message.powerstats.intelligence.min")
-    @Max(value = 10, message = "message.powerstats.intelligence.max")
-    @NotNull(message = "message.powerstats.intelligence.mandatory")
+    @Min(value = 0, message = "intelligence min 0")
+    @Max(value = 10, message = "intelligence max 10")
+    @NotNull(message = "intelligence cannot be null")
     private int intelligence;
 
     private Timestamp created_at;
